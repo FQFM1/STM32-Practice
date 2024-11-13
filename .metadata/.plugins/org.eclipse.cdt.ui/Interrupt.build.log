@@ -1,0 +1,17 @@
+18:06:14 **** Incremental Build of configuration Debug for project Interrupt ****
+make -j32 all 
+arm-none-eabi-gcc "../Core/Src/stm32h7xx_it.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32h7xx_it.d" -MT"Core/Src/stm32h7xx_it.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32h7xx_it.o"
+arm-none-eabi-gcc -o "Interrupt.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\Interrupt\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Interrupt.elf
+ 
+arm-none-eabi-size  Interrupt.elf 
+arm-none-eabi-objdump -h -S Interrupt.elf  > "Interrupt.list"
+   text	   data	    bss	    dec	    hex	filename
+   8404	     16	   1568	   9988	   2704	Interrupt.elf
+Finished building: default.size.stdout
+ 
+Finished building: Interrupt.list
+ 
+
+18:06:15 Build Finished. 0 errors, 0 warnings. (took 549ms)
+

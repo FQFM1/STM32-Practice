@@ -1,119 +1,56 @@
-09:22:41 **** Incremental Build of configuration Debug for project LED ****
+17:59:26 **** Incremental Build of configuration Debug for project Interrupt ****
 make -j32 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
+arm-none-eabi-gcc -o "Interrupt.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\Interrupt\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Interrupt.elf
  
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
+arm-none-eabi-size  Interrupt.elf 
+arm-none-eabi-objdump -h -S Interrupt.elf  > "Interrupt.list"
    text	   data	    bss	    dec	    hex	filename
-   8408	     16	   1568	   9992	   2708	LED.elf
+   8228	     16	   1568	   9812	   2654	Interrupt.elf
 Finished building: default.size.stdout
  
-Finished building: LED.list
+Finished building: Interrupt.list
  
-09:27:25 **** Incremental Build of configuration Debug for project LED ****
+18:05:05 **** Incremental Build of configuration Debug for project Interrupt ****
 make -j32 all 
-arm-none-eabi-size  LED.elf 
+arm-none-eabi-gcc "../Core/Src/stm32h7xx_it.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32h7xx_it.d" -MT"Core/Src/stm32h7xx_it.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32h7xx_it.o"
+arm-none-eabi-gcc -o "Interrupt.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\Interrupt\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Interrupt.elf
+ 
+arm-none-eabi-size  Interrupt.elf 
+arm-none-eabi-objdump -h -S Interrupt.elf  > "Interrupt.list"
    text	   data	    bss	    dec	    hex	filename
-   8408	     16	   1568	   9992	   2708	LED.elf
+   8364	     16	   1568	   9948	   26dc	Interrupt.elf
 Finished building: default.size.stdout
  
-09:28:06 **** Incremental Build of configuration Debug for project LED ****
-make -j32 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
+Finished building: Interrupt.list
  
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
-   text	   data	    bss	    dec	    hex	filename
-   8412	     16	   1568	   9996	   270c	LED.elf
-Finished building: default.size.stdout
- 
-Finished building: LED.list
- 
-09:29:16 **** Incremental Build of configuration Debug for project LED ****
+18:05:35 **** Incremental Build of configuration Debug for project Interrupt ****
 make -j32 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
+arm-none-eabi-gcc -o "Interrupt.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\Interrupt\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Interrupt.elf
  
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
+arm-none-eabi-size  Interrupt.elf 
+arm-none-eabi-objdump -h -S Interrupt.elf  > "Interrupt.list"
    text	   data	    bss	    dec	    hex	filename
-   8492	     16	   1568	  10076	   275c	LED.elf
+   8368	     16	   1568	   9952	   26e0	Interrupt.elf
 Finished building: default.size.stdout
  
-Finished building: LED.list
+Finished building: Interrupt.list
  
-09:30:08 **** Incremental Build of configuration Debug for project LED ****
+18:06:14 **** Incremental Build of configuration Debug for project Interrupt ****
 make -j32 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
+arm-none-eabi-gcc "../Core/Src/stm32h7xx_it.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32h7xx_it.d" -MT"Core/Src/stm32h7xx_it.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32h7xx_it.o"
+arm-none-eabi-gcc -o "Interrupt.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\Interrupt\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Interrupt.elf
  
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
+arm-none-eabi-size  Interrupt.elf 
+arm-none-eabi-objdump -h -S Interrupt.elf  > "Interrupt.list"
    text	   data	    bss	    dec	    hex	filename
-   8488	     16	   1568	  10072	   2758	LED.elf
+   8404	     16	   1568	   9988	   2704	Interrupt.elf
 Finished building: default.size.stdout
  
-Finished building: LED.list
- 
-09:32:48 **** Incremental Build of configuration Debug for project LED ****
-make -j32 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
- 
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
-   text	   data	    bss	    dec	    hex	filename
-   8504	     16	   1568	  10088	   2768	LED.elf
-Finished building: default.size.stdout
- 
-Finished building: LED.list
- 
-09:33:11 **** Incremental Build of configuration Debug for project LED ****
-make -j32 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
- 
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
-   text	   data	    bss	    dec	    hex	filename
-   8504	     16	   1568	  10088	   2768	LED.elf
-Finished building: default.size.stdout
- 
-Finished building: LED.list
- 
-09:34:09 **** Incremental Build of configuration Debug for project LED ****
-make -j32 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
- 
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
-   text	   data	    bss	    dec	    hex	filename
-   8504	     16	   1568	  10088	   2768	LED.elf
-Finished building: default.size.stdout
- 
-Finished building: LED.list
- 
-09:34:35 **** Incremental Build of configuration Debug for project LED ****
-make -j32 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H743xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "LED.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\IDE\Repositories\STM32-Practice\LED\STM32H743XIHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LED.elf
- 
-arm-none-eabi-size  LED.elf 
-arm-none-eabi-objdump -h -S LED.elf  > "LED.list"
-   text	   data	    bss	    dec	    hex	filename
-   8504	     16	   1568	  10088	   2768	LED.elf
-Finished building: default.size.stdout
- 
-Finished building: LED.list
+Finished building: Interrupt.list
  
