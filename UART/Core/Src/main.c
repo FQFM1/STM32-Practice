@@ -42,15 +42,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
+DMA_HandleTypeDef hdma_usart1_tx;
 
 /* USER CODE BEGIN PV */
-
+GPIO_PinState state;
+uint8_t receiveData[50];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -58,7 +62,50 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/**
+  * @brief  Rx Transfer completed callback.
+  * @param  huart UART handle.
+  * @retval None
+  */
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)		// 中断接收方式在 main 中不会堵塞后面的程序执行，不方便进行数据处理
+//{
+////	HAL_UART_Transmit_IT(&huart1, receiveData, 2);
+//	HAL_UART_Transmit_DMA(&huart1, receiveData, 2);
+//	if(receiveData[1] == '0')
+//	{
+//	  state = GPIO_PIN_SET;
+//	}
+//	else if(receiveData[1] == '1')
+//	{
+//	  state = GPIO_PIN_RESET;
+//	}
+//
+//	if(receiveData[0] == 'R')
+//	{
+//	  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, state);
+//	}
+//	else if(receiveData[0] == 'G')
+//	{
+//	  HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, state);
+//	}
+//	else if(receiveData[0] == 'B')
+//	{
+//	  HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, state);
+//	}
+//
+////	HAL_UART_Receive_IT(&huart1, receiveData, 2);	// 为了节省 CPU 资源，不将接收函数放在 while(1) 循环中
+//	HAL_UART_Receive_DMA(&huart1, receiveData, 2);
+//}
 
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)	// 接收不定长数据
+{
+	if(huart = &huart1)
+	{
+		HAL_UART_Transmit_DMA(&huart1, receiveData, Size);
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));
+		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);	// 关闭传输过半中断
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -93,41 +140,21 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  uint8_t receiveData[2];
-  GPIO_PinState state;
+//  HAL_UART_Receive_IT(&huart1, receiveData, 2);							// 中断模式接收
+//  HAL_UART_Receive_DMA(&huart1, receiveData, 2);							// DMA模式接收
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// 接收不定长数据
+  __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);		// 关闭传输过半中断
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_UART_Receive(&huart1, receiveData, 2, HAL_MAX_DELAY);
-	  HAL_UART_Transmit(&huart1, receiveData, 2, 100);
-
-	  if(receiveData[1] == '0')
-	  {
-		  state = GPIO_PIN_SET;
-	  }
-	  else if(receiveData[1] == '1')
-	  {
-		  state = GPIO_PIN_RESET;
-	  }
-
-	  if(receiveData[0] == 'R')
-	  {
-		  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, state);
-	  }
-	  else if(receiveData[0] == 'G')
-	  {
-		  HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, state);
-	  }
-	  else if(receiveData[0] == 'B')
-	  {
-		  HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, state);
-	  }
-
+//	  HAL_UART_Receive(&huart1, receiveData, 2, HAL_MAX_DELAY);
+//	  HAL_UART_Transmit(&huart1, receiveData, 2, 100);
 
 //	  if(receiveData[0] == 'R')
 //	  {
@@ -253,6 +280,25 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE BEGIN USART1_Init 2 */
 
   /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
 
 }
 
