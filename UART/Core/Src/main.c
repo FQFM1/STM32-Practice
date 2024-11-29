@@ -46,8 +46,10 @@ DMA_HandleTypeDef hdma_usart1_rx;
 DMA_HandleTypeDef hdma_usart1_tx;
 
 /* USER CODE BEGIN PV */
+
 GPIO_PinState state;
 uint8_t receiveData[50];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,12 +64,13 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 /**
   * @brief  Rx Transfer completed callback.
   * @param  huart UART handle.
   * @retval None
   */
-//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)		// 中断接收方式在 main 中不会堵塞后面的程序执行，不方便进行数据处理
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)		// 中断接收方式在 main 中不会堵塞后面的程序执行，会出现数据没收完程序就走到下一行的情况
 //{
 ////	HAL_UART_Transmit_IT(&huart1, receiveData, 2);
 //	HAL_UART_Transmit_DMA(&huart1, receiveData, 2);
@@ -99,13 +102,14 @@ static void MX_USART1_UART_Init(void);
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)	// 接收不定长数据
 {
-	if(huart = &huart1)
+	if(huart == &huart1)
 	{
 		HAL_UART_Transmit_DMA(&huart1, receiveData, Size);
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));
-		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);	// 关闭传输过半中断
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// 开启下一轮数据接收
+		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);							// 关闭传输过半中断
 	}
 }
+
 /* USER CODE END 0 */
 
 /**
@@ -143,17 +147,19 @@ int main(void)
   MX_DMA_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+
 //  HAL_UART_Receive_IT(&huart1, receiveData, 2);							// 中断模式接收
 //  HAL_UART_Receive_DMA(&huart1, receiveData, 2);							// DMA模式接收
-  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// 接收不定长数据
-  __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);		// 关闭传输过半中断
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// DMA模式不定长数据接收
+  __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);							// 关闭传输过半中断，防止数据没接收到就开始处理
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  HAL_UART_Receive(&huart1, receiveData, 2, HAL_MAX_DELAY);
+//	  HAL_UART_Receive(&huart1, receiveData, 2, HAL_MAX_DELAY);				// 普通模式堵塞接收UART消息
 //	  HAL_UART_Transmit(&huart1, receiveData, 2, 100);
 
 //	  if(receiveData[0] == 'R')

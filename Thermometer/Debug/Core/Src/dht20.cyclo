@@ -1,0 +1,7 @@
+../Core/Src/dht20.c:15:6:REGISTER_Reset	1
+../Core/Src/dht20.c:32:9:STATUS_Read	1
+../Core/Src/dht20.c:40:6:DHT20_Measure	1
+../Core/Src/dht20.c:47:6:DHT20_Get	1
+../Core/Src/dht20.c:53:6:DHT20_Analysis	1
+../Core/Src/dht20.c:64:6:DHT20_Init	2
+../Core/Src/dht20.c:78:6:DHT20_Read	2

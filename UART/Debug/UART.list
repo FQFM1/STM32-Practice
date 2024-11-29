@@ -33,15 +33,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_macro  00035741  00000000  00000000  0001f119  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   00010a5d  00000000  00000000  0005485a  2**0
+ 15 .debug_line   00010a60  00000000  00000000  0005485a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    00155e84  00000000  00000000  000652b7  2**0
+ 16 .debug_str    00155e84  00000000  00000000  000652ba  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000043  00000000  00000000  001bb13b  2**0
+ 17 .comment      00000043  00000000  00000000  001bb13e  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00002c70  00000000  00000000  001bb180  2**2
+ 18 .debug_frame  00002c70  00000000  00000000  001bb184  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_line_str 00000056  00000000  00000000  001bddf0  2**0
+ 19 .debug_line_str 00000056  00000000  00000000  001bddf4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -353,125 +353,127 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)	// 接
  80005ce:	6078      	str	r0, [r7, #4]
  80005d0:	460b      	mov	r3, r1
  80005d2:	807b      	strh	r3, [r7, #2]
-	if(huart = &huart1)
- 80005d4:	4b39      	ldr	r3, [pc, #228]	@ (80006bc <HAL_UARTEx_RxEventCallback+0xf4>)
- 80005d6:	607b      	str	r3, [r7, #4]
+	if(huart == &huart1)
+ 80005d4:	687b      	ldr	r3, [r7, #4]
+ 80005d6:	4a39      	ldr	r2, [pc, #228]	@ (80006bc <HAL_UARTEx_RxEventCallback+0xf4>)
+ 80005d8:	4293      	cmp	r3, r2
+ 80005da:	d16b      	bne.n	80006b4 <HAL_UARTEx_RxEventCallback+0xec>
 	{
 		HAL_UART_Transmit_DMA(&huart1, receiveData, Size);
- 80005d8:	887b      	ldrh	r3, [r7, #2]
- 80005da:	461a      	mov	r2, r3
- 80005dc:	4938      	ldr	r1, [pc, #224]	@ (80006c0 <HAL_UARTEx_RxEventCallback+0xf8>)
- 80005de:	4837      	ldr	r0, [pc, #220]	@ (80006bc <HAL_UARTEx_RxEventCallback+0xf4>)
- 80005e0:	f006 fdb4 	bl	800714c <HAL_UART_Transmit_DMA>
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));
- 80005e4:	2232      	movs	r2, #50	@ 0x32
- 80005e6:	4936      	ldr	r1, [pc, #216]	@ (80006c0 <HAL_UARTEx_RxEventCallback+0xf8>)
- 80005e8:	4834      	ldr	r0, [pc, #208]	@ (80006bc <HAL_UARTEx_RxEventCallback+0xf4>)
- 80005ea:	f008 fceb 	bl	8008fc4 <HAL_UARTEx_ReceiveToIdle_DMA>
-		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);	// 关闭传输过半中断
- 80005ee:	4b35      	ldr	r3, [pc, #212]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 80005f0:	681b      	ldr	r3, [r3, #0]
- 80005f2:	4a35      	ldr	r2, [pc, #212]	@ (80006c8 <HAL_UARTEx_RxEventCallback+0x100>)
- 80005f4:	4293      	cmp	r3, r2
- 80005f6:	d04a      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 80005f8:	4b32      	ldr	r3, [pc, #200]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 80005fa:	681b      	ldr	r3, [r3, #0]
- 80005fc:	4a33      	ldr	r2, [pc, #204]	@ (80006cc <HAL_UARTEx_RxEventCallback+0x104>)
- 80005fe:	4293      	cmp	r3, r2
- 8000600:	d045      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000602:	4b30      	ldr	r3, [pc, #192]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000604:	681b      	ldr	r3, [r3, #0]
- 8000606:	4a32      	ldr	r2, [pc, #200]	@ (80006d0 <HAL_UARTEx_RxEventCallback+0x108>)
- 8000608:	4293      	cmp	r3, r2
- 800060a:	d040      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 800060c:	4b2d      	ldr	r3, [pc, #180]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 800060e:	681b      	ldr	r3, [r3, #0]
- 8000610:	4a30      	ldr	r2, [pc, #192]	@ (80006d4 <HAL_UARTEx_RxEventCallback+0x10c>)
- 8000612:	4293      	cmp	r3, r2
- 8000614:	d03b      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000616:	4b2b      	ldr	r3, [pc, #172]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000618:	681b      	ldr	r3, [r3, #0]
- 800061a:	4a2f      	ldr	r2, [pc, #188]	@ (80006d8 <HAL_UARTEx_RxEventCallback+0x110>)
- 800061c:	4293      	cmp	r3, r2
- 800061e:	d036      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000620:	4b28      	ldr	r3, [pc, #160]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000622:	681b      	ldr	r3, [r3, #0]
- 8000624:	4a2d      	ldr	r2, [pc, #180]	@ (80006dc <HAL_UARTEx_RxEventCallback+0x114>)
- 8000626:	4293      	cmp	r3, r2
- 8000628:	d031      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 800062a:	4b26      	ldr	r3, [pc, #152]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 800062c:	681b      	ldr	r3, [r3, #0]
- 800062e:	4a2c      	ldr	r2, [pc, #176]	@ (80006e0 <HAL_UARTEx_RxEventCallback+0x118>)
- 8000630:	4293      	cmp	r3, r2
- 8000632:	d02c      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000634:	4b23      	ldr	r3, [pc, #140]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000636:	681b      	ldr	r3, [r3, #0]
- 8000638:	4a2a      	ldr	r2, [pc, #168]	@ (80006e4 <HAL_UARTEx_RxEventCallback+0x11c>)
- 800063a:	4293      	cmp	r3, r2
- 800063c:	d027      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 800063e:	4b21      	ldr	r3, [pc, #132]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000640:	681b      	ldr	r3, [r3, #0]
- 8000642:	4a29      	ldr	r2, [pc, #164]	@ (80006e8 <HAL_UARTEx_RxEventCallback+0x120>)
- 8000644:	4293      	cmp	r3, r2
- 8000646:	d022      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000648:	4b1e      	ldr	r3, [pc, #120]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 800064a:	681b      	ldr	r3, [r3, #0]
- 800064c:	4a27      	ldr	r2, [pc, #156]	@ (80006ec <HAL_UARTEx_RxEventCallback+0x124>)
- 800064e:	4293      	cmp	r3, r2
- 8000650:	d01d      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000652:	4b1c      	ldr	r3, [pc, #112]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000654:	681b      	ldr	r3, [r3, #0]
- 8000656:	4a26      	ldr	r2, [pc, #152]	@ (80006f0 <HAL_UARTEx_RxEventCallback+0x128>)
- 8000658:	4293      	cmp	r3, r2
- 800065a:	d018      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 800065c:	4b19      	ldr	r3, [pc, #100]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 800065e:	681b      	ldr	r3, [r3, #0]
- 8000660:	4a24      	ldr	r2, [pc, #144]	@ (80006f4 <HAL_UARTEx_RxEventCallback+0x12c>)
- 8000662:	4293      	cmp	r3, r2
- 8000664:	d013      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000666:	4b17      	ldr	r3, [pc, #92]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000668:	681b      	ldr	r3, [r3, #0]
- 800066a:	4a23      	ldr	r2, [pc, #140]	@ (80006f8 <HAL_UARTEx_RxEventCallback+0x130>)
- 800066c:	4293      	cmp	r3, r2
- 800066e:	d00e      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000670:	4b14      	ldr	r3, [pc, #80]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000672:	681b      	ldr	r3, [r3, #0]
- 8000674:	4a21      	ldr	r2, [pc, #132]	@ (80006fc <HAL_UARTEx_RxEventCallback+0x134>)
- 8000676:	4293      	cmp	r3, r2
- 8000678:	d009      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 800067a:	4b12      	ldr	r3, [pc, #72]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 800067c:	681b      	ldr	r3, [r3, #0]
- 800067e:	4a20      	ldr	r2, [pc, #128]	@ (8000700 <HAL_UARTEx_RxEventCallback+0x138>)
- 8000680:	4293      	cmp	r3, r2
- 8000682:	d004      	beq.n	800068e <HAL_UARTEx_RxEventCallback+0xc6>
- 8000684:	4b0f      	ldr	r3, [pc, #60]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000686:	681b      	ldr	r3, [r3, #0]
- 8000688:	4a1e      	ldr	r2, [pc, #120]	@ (8000704 <HAL_UARTEx_RxEventCallback+0x13c>)
- 800068a:	4293      	cmp	r3, r2
- 800068c:	d108      	bne.n	80006a0 <HAL_UARTEx_RxEventCallback+0xd8>
- 800068e:	4b0d      	ldr	r3, [pc, #52]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000690:	681b      	ldr	r3, [r3, #0]
- 8000692:	681a      	ldr	r2, [r3, #0]
- 8000694:	4b0b      	ldr	r3, [pc, #44]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 8000696:	681b      	ldr	r3, [r3, #0]
- 8000698:	f022 0208 	bic.w	r2, r2, #8
- 800069c:	601a      	str	r2, [r3, #0]
- 800069e:	e008      	b.n	80006b2 <HAL_UARTEx_RxEventCallback+0xea>
- 80006a0:	4b08      	ldr	r3, [pc, #32]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 80006a2:	681b      	ldr	r3, [r3, #0]
- 80006a4:	681a      	ldr	r2, [r3, #0]
- 80006a6:	4b07      	ldr	r3, [pc, #28]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
- 80006a8:	681b      	ldr	r3, [r3, #0]
- 80006aa:	f022 0204 	bic.w	r2, r2, #4
- 80006ae:	601a      	str	r2, [r3, #0]
+ 80005dc:	887b      	ldrh	r3, [r7, #2]
+ 80005de:	461a      	mov	r2, r3
+ 80005e0:	4937      	ldr	r1, [pc, #220]	@ (80006c0 <HAL_UARTEx_RxEventCallback+0xf8>)
+ 80005e2:	4836      	ldr	r0, [pc, #216]	@ (80006bc <HAL_UARTEx_RxEventCallback+0xf4>)
+ 80005e4:	f006 fdb2 	bl	800714c <HAL_UART_Transmit_DMA>
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// 开启下一轮数据接收
+ 80005e8:	2232      	movs	r2, #50	@ 0x32
+ 80005ea:	4935      	ldr	r1, [pc, #212]	@ (80006c0 <HAL_UARTEx_RxEventCallback+0xf8>)
+ 80005ec:	4833      	ldr	r0, [pc, #204]	@ (80006bc <HAL_UARTEx_RxEventCallback+0xf4>)
+ 80005ee:	f008 fce9 	bl	8008fc4 <HAL_UARTEx_ReceiveToIdle_DMA>
+		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);							// 关闭传输过半中断
+ 80005f2:	4b34      	ldr	r3, [pc, #208]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 80005f4:	681b      	ldr	r3, [r3, #0]
+ 80005f6:	4a34      	ldr	r2, [pc, #208]	@ (80006c8 <HAL_UARTEx_RxEventCallback+0x100>)
+ 80005f8:	4293      	cmp	r3, r2
+ 80005fa:	d04a      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 80005fc:	4b31      	ldr	r3, [pc, #196]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 80005fe:	681b      	ldr	r3, [r3, #0]
+ 8000600:	4a32      	ldr	r2, [pc, #200]	@ (80006cc <HAL_UARTEx_RxEventCallback+0x104>)
+ 8000602:	4293      	cmp	r3, r2
+ 8000604:	d045      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000606:	4b2f      	ldr	r3, [pc, #188]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000608:	681b      	ldr	r3, [r3, #0]
+ 800060a:	4a31      	ldr	r2, [pc, #196]	@ (80006d0 <HAL_UARTEx_RxEventCallback+0x108>)
+ 800060c:	4293      	cmp	r3, r2
+ 800060e:	d040      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000610:	4b2c      	ldr	r3, [pc, #176]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000612:	681b      	ldr	r3, [r3, #0]
+ 8000614:	4a2f      	ldr	r2, [pc, #188]	@ (80006d4 <HAL_UARTEx_RxEventCallback+0x10c>)
+ 8000616:	4293      	cmp	r3, r2
+ 8000618:	d03b      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 800061a:	4b2a      	ldr	r3, [pc, #168]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 800061c:	681b      	ldr	r3, [r3, #0]
+ 800061e:	4a2e      	ldr	r2, [pc, #184]	@ (80006d8 <HAL_UARTEx_RxEventCallback+0x110>)
+ 8000620:	4293      	cmp	r3, r2
+ 8000622:	d036      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000624:	4b27      	ldr	r3, [pc, #156]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000626:	681b      	ldr	r3, [r3, #0]
+ 8000628:	4a2c      	ldr	r2, [pc, #176]	@ (80006dc <HAL_UARTEx_RxEventCallback+0x114>)
+ 800062a:	4293      	cmp	r3, r2
+ 800062c:	d031      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 800062e:	4b25      	ldr	r3, [pc, #148]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000630:	681b      	ldr	r3, [r3, #0]
+ 8000632:	4a2b      	ldr	r2, [pc, #172]	@ (80006e0 <HAL_UARTEx_RxEventCallback+0x118>)
+ 8000634:	4293      	cmp	r3, r2
+ 8000636:	d02c      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000638:	4b22      	ldr	r3, [pc, #136]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 800063a:	681b      	ldr	r3, [r3, #0]
+ 800063c:	4a29      	ldr	r2, [pc, #164]	@ (80006e4 <HAL_UARTEx_RxEventCallback+0x11c>)
+ 800063e:	4293      	cmp	r3, r2
+ 8000640:	d027      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000642:	4b20      	ldr	r3, [pc, #128]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000644:	681b      	ldr	r3, [r3, #0]
+ 8000646:	4a28      	ldr	r2, [pc, #160]	@ (80006e8 <HAL_UARTEx_RxEventCallback+0x120>)
+ 8000648:	4293      	cmp	r3, r2
+ 800064a:	d022      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 800064c:	4b1d      	ldr	r3, [pc, #116]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 800064e:	681b      	ldr	r3, [r3, #0]
+ 8000650:	4a26      	ldr	r2, [pc, #152]	@ (80006ec <HAL_UARTEx_RxEventCallback+0x124>)
+ 8000652:	4293      	cmp	r3, r2
+ 8000654:	d01d      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000656:	4b1b      	ldr	r3, [pc, #108]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000658:	681b      	ldr	r3, [r3, #0]
+ 800065a:	4a25      	ldr	r2, [pc, #148]	@ (80006f0 <HAL_UARTEx_RxEventCallback+0x128>)
+ 800065c:	4293      	cmp	r3, r2
+ 800065e:	d018      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000660:	4b18      	ldr	r3, [pc, #96]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000662:	681b      	ldr	r3, [r3, #0]
+ 8000664:	4a23      	ldr	r2, [pc, #140]	@ (80006f4 <HAL_UARTEx_RxEventCallback+0x12c>)
+ 8000666:	4293      	cmp	r3, r2
+ 8000668:	d013      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 800066a:	4b16      	ldr	r3, [pc, #88]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 800066c:	681b      	ldr	r3, [r3, #0]
+ 800066e:	4a22      	ldr	r2, [pc, #136]	@ (80006f8 <HAL_UARTEx_RxEventCallback+0x130>)
+ 8000670:	4293      	cmp	r3, r2
+ 8000672:	d00e      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000674:	4b13      	ldr	r3, [pc, #76]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000676:	681b      	ldr	r3, [r3, #0]
+ 8000678:	4a20      	ldr	r2, [pc, #128]	@ (80006fc <HAL_UARTEx_RxEventCallback+0x134>)
+ 800067a:	4293      	cmp	r3, r2
+ 800067c:	d009      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 800067e:	4b11      	ldr	r3, [pc, #68]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000680:	681b      	ldr	r3, [r3, #0]
+ 8000682:	4a1f      	ldr	r2, [pc, #124]	@ (8000700 <HAL_UARTEx_RxEventCallback+0x138>)
+ 8000684:	4293      	cmp	r3, r2
+ 8000686:	d004      	beq.n	8000692 <HAL_UARTEx_RxEventCallback+0xca>
+ 8000688:	4b0e      	ldr	r3, [pc, #56]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 800068a:	681b      	ldr	r3, [r3, #0]
+ 800068c:	4a1d      	ldr	r2, [pc, #116]	@ (8000704 <HAL_UARTEx_RxEventCallback+0x13c>)
+ 800068e:	4293      	cmp	r3, r2
+ 8000690:	d108      	bne.n	80006a4 <HAL_UARTEx_RxEventCallback+0xdc>
+ 8000692:	4b0c      	ldr	r3, [pc, #48]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 8000694:	681b      	ldr	r3, [r3, #0]
+ 8000696:	681a      	ldr	r2, [r3, #0]
+ 8000698:	4b0a      	ldr	r3, [pc, #40]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 800069a:	681b      	ldr	r3, [r3, #0]
+ 800069c:	f022 0208 	bic.w	r2, r2, #8
+ 80006a0:	601a      	str	r2, [r3, #0]
 	}
 }
- 80006b0:	bf00      	nop
- 80006b2:	bf00      	nop
- 80006b4:	3708      	adds	r7, #8
- 80006b6:	46bd      	mov	sp, r7
- 80006b8:	bd80      	pop	{r7, pc}
- 80006ba:	bf00      	nop
+ 80006a2:	e007      	b.n	80006b4 <HAL_UARTEx_RxEventCallback+0xec>
+		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);							// 关闭传输过半中断
+ 80006a4:	4b07      	ldr	r3, [pc, #28]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 80006a6:	681b      	ldr	r3, [r3, #0]
+ 80006a8:	681a      	ldr	r2, [r3, #0]
+ 80006aa:	4b06      	ldr	r3, [pc, #24]	@ (80006c4 <HAL_UARTEx_RxEventCallback+0xfc>)
+ 80006ac:	681b      	ldr	r3, [r3, #0]
+ 80006ae:	f022 0204 	bic.w	r2, r2, #4
+ 80006b2:	601a      	str	r2, [r3, #0]
+}
+ 80006b4:	bf00      	nop
+ 80006b6:	3708      	adds	r7, #8
+ 80006b8:	46bd      	mov	sp, r7
+ 80006ba:	bd80      	pop	{r7, pc}
  80006bc:	2400002c 	.word	0x2400002c
  80006c0:	240001b0 	.word	0x240001b0
  80006c4:	240000c0 	.word	0x240000c0
@@ -533,14 +535,15 @@ int main(void)
   MX_USART1_UART_Init();
  8000720:	f000 f93e 	bl	80009a0 <MX_USART1_UART_Init>
   /* USER CODE BEGIN 2 */
+
 //  HAL_UART_Receive_IT(&huart1, receiveData, 2);							// 中断模式接收
 //  HAL_UART_Receive_DMA(&huart1, receiveData, 2);							// DMA模式接收
-  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// 接收不定长数据
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, receiveData, sizeof(receiveData));	// DMA模式不定长数据接收
  8000724:	2232      	movs	r2, #50	@ 0x32
  8000726:	4933      	ldr	r1, [pc, #204]	@ (80007f4 <main+0xec>)
  8000728:	4833      	ldr	r0, [pc, #204]	@ (80007f8 <main+0xf0>)
  800072a:	f008 fc4b 	bl	8008fc4 <HAL_UARTEx_ReceiveToIdle_DMA>
-  __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);		// 关闭传输过半中断
+  __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);							// 关闭传输过半中断，防止数据没接收到就开始处理
  800072e:	4b33      	ldr	r3, [pc, #204]	@ (80007fc <main+0xf4>)
  8000730:	681b      	ldr	r3, [r3, #0]
  8000732:	4a33      	ldr	r2, [pc, #204]	@ (8000800 <main+0xf8>)
@@ -636,6 +639,7 @@ int main(void)
  80007e8:	681b      	ldr	r3, [r3, #0]
  80007ea:	f022 0204 	bic.w	r2, r2, #4
  80007ee:	601a      	str	r2, [r3, #0]
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

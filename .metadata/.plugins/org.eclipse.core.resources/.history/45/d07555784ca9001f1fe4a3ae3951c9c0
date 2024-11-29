@@ -1,0 +1,18 @@
+/*
+ * oled.h
+ *
+ *  Created on: Nov 22, 2024
+ *      Author: lizha
+ */
+
+#ifndef INC_OLED_H_
+#define INC_OLED_H_
+
+#include "i2c.h"
+
+void OLED_Init();
+void OLED_Test();
+void OLED_NewFrame();
+void OLED_ShowFrame();
+
+#endif /* INC_OLED_H_ */

@@ -21,9 +21,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   8 .ARM.attributes 0000002e  00000000  00000000  00004010  2**0
                   CONTENTS, READONLY
-  9 .debug_info   00007028  00000000  00000000  0000403e  2**0
+  9 .debug_info   00007029  00000000  00000000  0000403e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 10 .debug_abbrev 00001285  00000000  00000000  0000b066  2**0
+ 10 .debug_abbrev 00001285  00000000  00000000  0000b067  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  11 .debug_aranges 00000610  00000000  00000000  0000c2f0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -31,15 +31,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  13 .debug_macro  00034471  00000000  00000000  0000cd73  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line   000073ad  00000000  00000000  000411e4  2**0
+ 14 .debug_line   000073ae  00000000  00000000  000411e4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    0014d9e8  00000000  00000000  00048591  2**0
+ 15 .debug_str    0014d9e8  00000000  00000000  00048592  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      00000043  00000000  00000000  00195f79  2**0
+ 16 .comment      00000043  00000000  00000000  00195f7a  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  000016f0  00000000  00000000  00195fbc  2**2
+ 17 .debug_frame  000016f0  00000000  00000000  00195fc0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line_str 00000055  00000000  00000000  001976ac  2**0
+ 18 .debug_line_str 00000055  00000000  00000000  001976b0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -120,7 +120,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
+	  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)			// KEY1按下
  80002f6:	2101      	movs	r1, #1
  80002f8:	4873      	ldr	r0, [pc, #460]	@ (80004c8 <main+0x1f0>)
  80002fa:	f000 fee3 	bl	80010c4 <HAL_GPIO_ReadPin>
@@ -128,7 +128,7 @@ int main(void)
  8000300:	2b01      	cmp	r3, #1
  8000302:	d141      	bne.n	8000388 <main+0xb0>
 	  {
-		  while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);	// HAL_Delay(500);
+		  while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);	// 防止多次触发
  8000304:	bf00      	nop
  8000306:	2101      	movs	r1, #1
  8000308:	486f      	ldr	r0, [pc, #444]	@ (80004c8 <main+0x1f0>)
@@ -140,7 +140,7 @@ int main(void)
  8000314:	687b      	ldr	r3, [r7, #4]
  8000316:	3301      	adds	r3, #1
  8000318:	607b      	str	r3, [r7, #4]
-		  if(i == 1)
+		  if(i == 1)															// 每按一次KEY1，红绿蓝三色LED依次亮起
  800031a:	687b      	ldr	r3, [r7, #4]
  800031c:	2b01      	cmp	r3, #1
  800031e:	d10f      	bne.n	8000340 <main+0x68>
@@ -207,7 +207,7 @@ int main(void)
 		  }
 	  }
 
-	  if(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)
+	  if(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)			// KEY2按下
  8000388:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
  800038c:	4850      	ldr	r0, [pc, #320]	@ (80004d0 <main+0x1f8>)
  800038e:	f000 fe99 	bl	80010c4 <HAL_GPIO_ReadPin>
@@ -215,7 +215,7 @@ int main(void)
  8000394:	2b01      	cmp	r3, #1
  8000396:	d1ae      	bne.n	80002f6 <main+0x1e>
 	  {
-		  while(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);
+		  while(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);	// 防止多次触发
  8000398:	bf00      	nop
  800039a:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
  800039e:	484c      	ldr	r0, [pc, #304]	@ (80004d0 <main+0x1f8>)
@@ -229,7 +229,7 @@ int main(void)
  80003aa:	683b      	ldr	r3, [r7, #0]
  80003ac:	3301      	adds	r3, #1
  80003ae:	603b      	str	r3, [r7, #0]
-			  switch(state)
+			  switch(state)														// 混色LED循环闪烁，间隔0.1秒
  80003b0:	683b      	ldr	r3, [r7, #0]
  80003b2:	2b05      	cmp	r3, #5
  80003b4:	d86e      	bhi.n	8000494 <main+0x1bc>
@@ -260,7 +260,7 @@ int main(void)
  80003ec:	4836      	ldr	r0, [pc, #216]	@ (80004c8 <main+0x1f0>)
  80003ee:	f000 fe81 	bl	80010f4 <HAL_GPIO_WritePin>
 				  break;
- 80003f2:	e04f      	b.n	8000494 <main+0x1bc>
+ 80003f2:	e050      	b.n	8000496 <main+0x1be>
 			  }
 			  case 1:
 			  {
@@ -280,7 +280,7 @@ int main(void)
  800040c:	482e      	ldr	r0, [pc, #184]	@ (80004c8 <main+0x1f0>)
  800040e:	f000 fe71 	bl	80010f4 <HAL_GPIO_WritePin>
 				  break;
- 8000412:	e03f      	b.n	8000494 <main+0x1bc>
+ 8000412:	e040      	b.n	8000496 <main+0x1be>
 			  }
 			  case 2:
 			  {
@@ -300,7 +300,7 @@ int main(void)
  800042c:	4826      	ldr	r0, [pc, #152]	@ (80004c8 <main+0x1f0>)
  800042e:	f000 fe61 	bl	80010f4 <HAL_GPIO_WritePin>
 				  break;
- 8000432:	e02f      	b.n	8000494 <main+0x1bc>
+ 8000432:	e030      	b.n	8000496 <main+0x1be>
 			  }
 			  case 3:
 			  {
@@ -320,7 +320,7 @@ int main(void)
  800044c:	481e      	ldr	r0, [pc, #120]	@ (80004c8 <main+0x1f0>)
  800044e:	f000 fe51 	bl	80010f4 <HAL_GPIO_WritePin>
 				  break;
- 8000452:	e01f      	b.n	8000494 <main+0x1bc>
+ 8000452:	e020      	b.n	8000496 <main+0x1be>
 			  }
 			  case 4:
 			  {
@@ -340,7 +340,7 @@ int main(void)
  800046c:	4816      	ldr	r0, [pc, #88]	@ (80004c8 <main+0x1f0>)
  800046e:	f000 fe41 	bl	80010f4 <HAL_GPIO_WritePin>
 				  break;
- 8000472:	e00f      	b.n	8000494 <main+0x1bc>
+ 8000472:	e010      	b.n	8000496 <main+0x1be>
 			  }
 			  case 5:
 			  {
@@ -360,40 +360,44 @@ int main(void)
  800048c:	480e      	ldr	r0, [pc, #56]	@ (80004c8 <main+0x1f0>)
  800048e:	f000 fe31 	bl	80010f4 <HAL_GPIO_WritePin>
 				  break;
- 8000492:	bf00      	nop
+ 8000492:	e000      	b.n	8000496 <main+0x1be>
+			  }
+			  default:
+			  {
+				  break;
+ 8000494:	bf00      	nop
 			  }
 			  }
 			  HAL_Delay(100);
- 8000494:	2064      	movs	r0, #100	@ 0x64
- 8000496:	f000 fad9 	bl	8000a4c <HAL_Delay>
-			  if(state > 5)
- 800049a:	683b      	ldr	r3, [r7, #0]
- 800049c:	2b05      	cmp	r3, #5
- 800049e:	dd01      	ble.n	80004a4 <main+0x1cc>
+ 8000496:	2064      	movs	r0, #100	@ 0x64
+ 8000498:	f000 fad8 	bl	8000a4c <HAL_Delay>
+			  if(state > 5)														// 初始化循环状态
+ 800049c:	683b      	ldr	r3, [r7, #0]
+ 800049e:	2b05      	cmp	r3, #5
+ 80004a0:	dd01      	ble.n	80004a6 <main+0x1ce>
 			  {
 				  state = 0;
- 80004a0:	2300      	movs	r3, #0
- 80004a2:	603b      	str	r3, [r7, #0]
+ 80004a2:	2300      	movs	r3, #0
+ 80004a4:	603b      	str	r3, [r7, #0]
 			  }
-			  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
- 80004a4:	2101      	movs	r1, #1
- 80004a6:	4808      	ldr	r0, [pc, #32]	@ (80004c8 <main+0x1f0>)
- 80004a8:	f000 fe0c 	bl	80010c4 <HAL_GPIO_ReadPin>
- 80004ac:	4603      	mov	r3, r0
- 80004ae:	2b01      	cmp	r3, #1
- 80004b0:	f47f af7b 	bne.w	80003aa <main+0xd2>
+			  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)	// KEY1按下后，LED停止闪烁
+ 80004a6:	2101      	movs	r1, #1
+ 80004a8:	4807      	ldr	r0, [pc, #28]	@ (80004c8 <main+0x1f0>)
+ 80004aa:	f000 fe0b 	bl	80010c4 <HAL_GPIO_ReadPin>
+ 80004ae:	4603      	mov	r3, r0
+ 80004b0:	2b01      	cmp	r3, #1
+ 80004b2:	f47f af7a 	bne.w	80003aa <main+0xd2>
 			  {
 				  while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);
- 80004b4:	bf00      	nop
- 80004b6:	2101      	movs	r1, #1
- 80004b8:	4803      	ldr	r0, [pc, #12]	@ (80004c8 <main+0x1f0>)
- 80004ba:	f000 fe03 	bl	80010c4 <HAL_GPIO_ReadPin>
- 80004be:	4603      	mov	r3, r0
- 80004c0:	2b01      	cmp	r3, #1
- 80004c2:	d0f8      	beq.n	80004b6 <main+0x1de>
-	  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
- 80004c4:	e717      	b.n	80002f6 <main+0x1e>
- 80004c6:	bf00      	nop
+ 80004b6:	bf00      	nop
+ 80004b8:	2101      	movs	r1, #1
+ 80004ba:	4803      	ldr	r0, [pc, #12]	@ (80004c8 <main+0x1f0>)
+ 80004bc:	f000 fe02 	bl	80010c4 <HAL_GPIO_ReadPin>
+ 80004c0:	4603      	mov	r3, r0
+ 80004c2:	2b01      	cmp	r3, #1
+ 80004c4:	d0f8      	beq.n	80004b8 <main+0x1e0>
+	  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)			// KEY1按下
+ 80004c6:	e716      	b.n	80002f6 <main+0x1e>
  80004c8:	58020000 	.word	0x58020000
  80004cc:	58020400 	.word	0x58020400
  80004d0:	58020800 	.word	0x58020800

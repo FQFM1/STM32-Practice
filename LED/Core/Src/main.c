@@ -98,11 +98,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
+	  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)			// KEY1按下
 	  {
-		  while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);	// HAL_Delay(500);
+		  while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);	// 防止多次触发
 		  i++;
-		  if(i == 1)
+		  if(i == 1)															// 每按一次KEY1，红绿蓝三色LED依次亮起
 		  {
 			  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);
 			  HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
@@ -123,13 +123,13 @@ int main(void)
 		  }
 	  }
 
-	  if(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)
+	  if(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)			// KEY2按下
 	  {
-		  while(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);
+		  while(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);	// 防止多次触发
 		  while(1)
 		  {
 			  state++;
-			  switch(state)
+			  switch(state)														// 混色LED循环闪烁，间隔0.1秒
 			  {
 			  case 0:
 			  {
@@ -173,13 +173,17 @@ int main(void)
 				  HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
 				  break;
 			  }
+			  default:
+			  {
+				  break;
+			  }
 			  }
 			  HAL_Delay(100);
-			  if(state > 5)
+			  if(state > 5)														// 初始化循环状态
 			  {
 				  state = 0;
 			  }
-			  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
+			  if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)	// KEY1按下后，LED停止闪烁
 			  {
 				  while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);
 				  break;

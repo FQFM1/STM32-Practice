@@ -1,0 +1,16 @@
+/*
+ * oled.c
+ *
+ *  Created on: Nov 22, 2024
+ *      Author: lizha
+ */
+#include "oled.h"
+
+#define OLED_ADDRESS 0x78
+
+void OLED_SendCmd();
+{
+
+}
+
+

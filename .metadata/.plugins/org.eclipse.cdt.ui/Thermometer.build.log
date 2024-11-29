@@ -1,0 +1,10 @@
+13:57:03 **** Build of configuration Debug for project Thermometer ****
+make -j32 all 
+arm-none-eabi-size  Thermometer.elf 
+   text	   data	    bss	    dec	    hex	filename
+  41748	    472	   3232	  45452	   b18c	Thermometer.elf
+Finished building: default.size.stdout
+ 
+
+13:57:03 Build Finished. 0 errors, 0 warnings. (took 227ms)
+

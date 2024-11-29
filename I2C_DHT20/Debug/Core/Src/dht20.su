@@ -1,0 +1,7 @@
+../Core/Src/dht20.c:14:6:REGISTER_Reset	40	static
+../Core/Src/dht20.c:31:9:STATUS_Read	24	static
+../Core/Src/dht20.c:39:6:DHT20_Measure	8	static
+../Core/Src/dht20.c:46:6:DHT20_Get	8	static
+../Core/Src/dht20.c:52:6:DHT20_Analysis	24	static
+../Core/Src/dht20.c:63:6:DHT20_Init	8	static
+../Core/Src/dht20.c:77:6:DHT20_Read	40	static

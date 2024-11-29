@@ -1,0 +1,100 @@
+/*
+ * DHT20.c
+ *
+ *  Created on: Nov 21, 2024
+ *      Author: lizha
+ */
+#include "dht20.h"
+
+#define DHT20_ADDRESS 0x70
+#define HI2C hi2c2
+
+uint8_t readBuffer[6] = { 0 };
+
+// Reset DHT20 register
+void REGISTER_Reset(uint8_t addr)
+{
+	uint8_t sendBuffer1[3] = { addr, 0x00, 0x00 };
+	HAL_I2C_Master_Transmit(&HI2C, DHT20_ADDRESS, sendBuffer1, 3, HAL_MAX_DELAY);
+
+	HAL_Delay(5);
+
+	uint8_t readBuffer[3] = { 0, 0, 0 };
+	HAL_I2C_Master_Receive(&HI2C, DHT20_ADDRESS, readBuffer, 3, HAL_MAX_DELAY);
+
+	HAL_Delay(10);
+
+	uint8_t sendBuffer2[3] = { 0xB0 | addr, readBuffer[1], readBuffer[2] };
+	HAL_I2C_Master_Transmit(&HI2C, DHT20_ADDRESS, sendBuffer2, 3, HAL_MAX_DELAY);
+}
+
+// Read DHT20 status
+uint8_t STATUS_Read()
+{
+	uint8_t readBuffer = 0;
+	HAL_I2C_Master_Receive(&HI2C, DHT20_ADDRESS, &readBuffer, 1, HAL_MAX_DELAY);
+	return readBuffer;
+}
+
+// Send 0xAC command
+void DHT20_Measure()
+{
+	static uint8_t sendBuffer[3] = { 0xAC, 0x33, 0x00 };
+	HAL_I2C_Master_Transmit_IT(&HI2C, DHT20_ADDRESS, sendBuffer, 3);		// HAL_I2C_Master_Transmit_DMA(&HI2C, DHT20_ADDRESS, sendBuffer, 3);
+}
+
+// Receive temperature and humidity data from DHT20
+void DHT20_Get()
+{
+	HAL_I2C_Master_Receive_IT(&HI2C, DHT20_ADDRESS, readBuffer, 6);		// HAL_I2C_Master_Receive_DMA(&HI2C, DHT20_ADDRESS, readBuffer, 6);
+}
+
+// Convert BIN data to DEC data
+void DHT20_Analysis(float* Temperature, float* Humidity)
+{
+	uint32_t data = 0;
+	data = ((uint32_t)readBuffer[3] >> 4) + ((uint32_t)readBuffer[2] << 4) + ((uint32_t)readBuffer[1] << 12);
+	*Humidity = data * 100.0f / (1 << 20);
+
+	data = (((uint32_t)readBuffer[3] & 0x0F) << 16) + ((uint32_t)readBuffer[4] << 8) + (uint32_t)readBuffer[5];
+	*Temperature = data * 200.0f / (1 << 20) - 50;
+}
+
+// Initialize DHT20
+void DHT20_Init()
+{
+	HAL_Delay(100);
+
+	if((STATUS_Read() & 0x18) != 0x18)
+	{
+		REGISTER_Reset(0x1B);
+		REGISTER_Reset(0x1C);
+		REGISTER_Reset(0x1E);
+		HAL_Delay(10);
+	}
+}
+
+// Read current temperature and humidity(common mode)
+void DHT20_Read(float* Temperature, float* Humidity)
+{
+	uint8_t sendBuffer[3] = { 0xAC, 0x33, 0x00 };
+	HAL_I2C_Master_Transmit(&HI2C, DHT20_ADDRESS, sendBuffer, 3, HAL_MAX_DELAY);
+
+	HAL_Delay(80);
+
+	while((STATUS_Read() & 0x80) == 0x80)
+	{
+
+	}
+
+	uint8_t readBuffer[6] = { 0, 0, 0, 0, 0, 0 };
+	HAL_I2C_Master_Receive(&HI2C, DHT20_ADDRESS, readBuffer, 6, HAL_MAX_DELAY);
+
+	uint32_t data = 0;
+	data = ((uint32_t)readBuffer[3] >> 4) + ((uint32_t)readBuffer[2] << 4) + ((uint32_t)readBuffer[1] << 12);
+	*Humidity = data * 100.0f / (1 << 20);
+
+	data = (((uint32_t)readBuffer[3] & 0x0F) << 16) + ((uint32_t)readBuffer[4] << 8) + (uint32_t)readBuffer[5];
+	*Temperature = data * 200.0f / (1 << 20) - 50;
+}
+

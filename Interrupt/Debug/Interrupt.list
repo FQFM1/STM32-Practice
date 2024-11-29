@@ -113,7 +113,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);	// 默认状态下，红色LED闪烁
  80002ec:	2200      	movs	r2, #0
  80002ee:	2101      	movs	r1, #1
  80002f0:	4807      	ldr	r0, [pc, #28]	@ (8000310 <main+0x38>)
@@ -129,7 +129,7 @@ int main(void)
 	  HAL_Delay(250);
  8000306:	20fa      	movs	r0, #250	@ 0xfa
  8000308:	f000 fb04 	bl	8000914 <HAL_Delay>
-	  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);	// 默认状态下，红色LED闪烁
  800030c:	bf00      	nop
  800030e:	e7ed      	b.n	80002ec <main+0x14>
  8000310:	58020400 	.word	0x58020400
@@ -765,7 +765,7 @@ void EXTI0_IRQHandler(void)
  8000628:	b580      	push	{r7, lr}
  800062a:	af00      	add	r7, sp, #0
   /* USER CODE BEGIN EXTI0_IRQn 0 */
-	while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);
+	while(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET);		// KEY1按下时，翻转绿色LED状态
  800062c:	bf00      	nop
  800062e:	2101      	movs	r1, #1
  8000630:	4807      	ldr	r0, [pc, #28]	@ (8000650 <EXTI0_IRQHandler+0x28>)
@@ -801,7 +801,7 @@ void EXTI15_10_IRQHandler(void)
  8000658:	b580      	push	{r7, lr}
  800065a:	af00      	add	r7, sp, #0
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-	while(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);
+	while(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);		// KEY1按下时，翻转蓝色LED状态
  800065c:	bf00      	nop
  800065e:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
  8000662:	4808      	ldr	r0, [pc, #32]	@ (8000684 <EXTI15_10_IRQHandler+0x2c>)
